@@ -19,6 +19,7 @@ typedef struct imobil
 	short confort;
     short piscina; // 1==da;0==nu
 	short terasa;  // la fel ca mai sus, da sau nu
+    int pret;
 }imobil;
 
 imobil* lista_imobile;
@@ -46,7 +47,7 @@ void initializare_imobile()
         fscanf(f,"%d",&lista_imobile[i].confort);
         fscanf(f,"%d",&lista_imobile[i].piscina);
         fscanf(f,"%d",&lista_imobile[i].terasa);
-        printf("Tipul este:%d",lista_imobile[i].tip);
+        fscanf(f,"%d",&lista_imobile[i].pret);
         //imobile_append(&lista_imobile,p);
     }
 
@@ -58,6 +59,10 @@ short afisare_imobil(imobil* nume_imobil)
     printf("%s",nume_imobil->titlu);
     textcolor(7);
     printf("\n\n");
+    textcolor(112);
+    printf("Pret:");
+    textcolor(7);
+    printf(" %d$\n",nume_imobil->pret);
     textcolor(112);
     printf("Tip:");
     textcolor(7);
@@ -101,7 +106,15 @@ short afisare_imobil(imobil* nume_imobil)
     printf("Terasa:");
     textcolor(7);
     printf(" %s\n",nume_imobil->terasa==1?"da":"nu");
-    system("pause");
+    printf("\nApasa ESC pentru a merge inapoi");
+    while(1)
+    {
+        if(GetAsyncKeyState(VK_ESCAPE))
+            {
+                return 1;
+                break;
+            }
+    }
 }
 
 void textcolor(int color)
@@ -212,7 +225,10 @@ short meniu_cumparare()
     optiune=meniu(optiuni,0,nr_imobile+2,'\0');
     while(optiune!=nr_imobile && optiune!=nr_imobile+1)
     {
-        afisare_imobil(&lista_imobile[optiune]);
+        if(afisare_imobil(&lista_imobile[optiune])==1)
+        {
+            optiune=meniu(optiuni,0,nr_imobile+2,'\0');
+        }
     }
     if(optiune==nr_imobile)
         return 1;
