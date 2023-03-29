@@ -52,7 +52,9 @@ int main()
     case 2:
         break;
     }
+    resetBuffer();
     while(GetAsyncKeyState(VK_RETURN)) {}
+    Sleep(100);
     return 0;
 }
 
