@@ -24,8 +24,7 @@ typedef struct imobil
 
 imobil* lista_imobile;
 int nr_imobile;
-
-
+imobil** lista_favorite;
 
 void initializare_imobile()
 {
@@ -33,6 +32,7 @@ void initializare_imobile()
     char aux;
     fscanf(f,"%d\n",&nr_imobile);
     lista_imobile=(imobil*)malloc(sizeof(imobil)*nr_imobile);
+    lista_favorite=(imobil**)malloc(sizeof(imobil*)*nr_imobile);
     for(int i=0; i<nr_imobile; i++)
     {
         lista_imobile[i].titlu=(char*)malloc(sizeof(char)*30);
@@ -59,6 +59,7 @@ void rescriere_fisier(imobil* nou_imobil)
     for(int i=0; i<nr_imobile-1; i++)
     {
         fprintf(f,"%s",lista_imobile[i].titlu);
+        free(lista_imobile[i].titlu);
         fprintf(f,"%d ",lista_imobile[i].pret);
         fprintf(f,"%d ",lista_imobile[i].tip);
         fprintf(f,"%d ",lista_imobile[i].suprafata);
@@ -84,6 +85,7 @@ void rescriere_fisier(imobil* nou_imobil)
         fprintf(f,"%d ",nou_imobil->piscina);
         fprintf(f,"%d",nou_imobil->terasa);
     fclose(f);
+    free(lista_imobile);
     initializare_imobile();
 }
 
@@ -326,18 +328,16 @@ void copiere_imobil(imobil* imobil1, imobil* imobil2)
 
 void cumparare_imobil(imobil* imobil_cumparat, short pozitie)
 {
-   // system("cls");
     if(nr_imobile>0)
     {
         for(int i=pozitie; i<nr_imobile-1; i++)
         {
-            //printf("%s\t%s\n",imobil_cumparat[i].titlu,imobil_cumparat[i+1].titlu);
             copiere_imobil(&imobil_cumparat[i],&imobil_cumparat[i+1]);
         }
         nr_imobile--;
     }
-    rescriere_fisier1();
-    initializare_imobile();
+    //rescriere_fisier1();
+    //initializare_imobile();
 }
 
 short meniu_cumparare()
@@ -360,12 +360,14 @@ short meniu_cumparare()
             optiune=meniu(optiuni,0,nr_imobile+2,'\0');
         else if(optiune_imobil==0)
         {
+            system("cls");
             cumparare_imobil(&lista_imobile[optiune],optiune);
             goto back;
         }
         else if(optiune_imobil==3)
             optiune=nr_imobile+1;  
     }
+    free(optiuni);
     if(optiune==nr_imobile)
         return 1;
     return 0;
@@ -374,6 +376,9 @@ short meniu_cumparare()
 void meniu_vanzare()
 {
     while(GetAsyncKeyState(VK_RETURN)) {}
+    static int i=0;
+    if(i>=1)
+        getchar();
     resetBuffer();
     fflush(stdin);
     nr_imobile++;
@@ -411,8 +416,7 @@ void meniu_vanzare()
     scanf("%d",&nou_imobil->terasa);
     system("cls");
     rescriere_fisier(nou_imobil);
+    i++;
 }
-
-
 
 #endif

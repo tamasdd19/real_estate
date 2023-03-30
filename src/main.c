@@ -55,6 +55,7 @@ int main()
     resetBuffer();
     while(GetAsyncKeyState(VK_RETURN)) {}
     Sleep(100);
+    system("cls");
     return 0;
 }
 
