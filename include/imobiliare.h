@@ -112,6 +112,18 @@ void rescriere_fisier1()
     initializare_imobile();
 }
 
+int acelasi_titlu(const imobil* imobil1, const imobil* imobil2)
+{
+    for(int i=0; i<nr_imobile; i++)
+    {
+        //printf("%s    %s\n",imobil1[i].titlu,imobil2->titlu);
+        if(!strcmp(imobil1[i].titlu,imobil2->titlu))
+            return 1;
+        //system("pause");
+    }
+    return 0;
+}
+
 short afisare_imobil(imobil* nume_imobil)
 {
     int optiune=0;
@@ -361,7 +373,7 @@ short meniu_cumparare()
         else if(optiune_imobil==0)
         {
             system("cls");
-            cumparare_imobil(&lista_imobile[optiune],optiune);
+            cumparare_imobil(lista_imobile,optiune);
             goto back;
         }
         else if(optiune_imobil==3)
@@ -392,6 +404,14 @@ void meniu_vanzare()
     textcolor(7);
     printf("\n\nTitlu: ");
     fgets(nou_imobil->titlu,30,stdin);
+    if(acelasi_titlu(lista_imobile,nou_imobil))
+    {
+        printf("Titlurile anunturilor trebuie sa fie diferite!\n");
+        Sleep(2000);
+        free(nou_imobil->titlu);
+        free(nou_imobil);
+        return ;
+    }
     printf("Pret: ");
     scanf("%d",&nou_imobil->pret);
     printf("Tip(1:apartament,0:casa): ");
