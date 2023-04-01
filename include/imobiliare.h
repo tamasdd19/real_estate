@@ -5,6 +5,7 @@
 #include <windows.h>
 #include <stdlib.h>
 #include <string.h>
+#define MAX_C 30
 
 typedef struct imobil
 {
@@ -22,36 +23,144 @@ typedef struct imobil
 	short terasa;  // la fel ca mai sus, da sau nu
 }imobil;
 
-imobil* lista_imobile;
-int nr_imobile;
-imobil** lista_favorite;
+typedef struct Lista_imobile
+{
+    imobil* Imobil;
+    int capacitate;
+    int nr_imobile;
+}Lista_imobile;
+
+Lista_imobile lista_imobile;
+
+Lista_imobile initializare_lista(int n)
+{
+    Lista_imobile nou;
+    nou.Imobil=(imobil*)malloc(sizeof(imobil)*(n+n/2));
+    nou.capacitate=n+n/2;
+    nou.nr_imobile=n;
+    return nou;
+}
+
+imobil* copiere_imobile(imobil* de_copiat, int capacitate, int nr_imobile)
+{
+    imobil* nou=(imobil*)malloc(sizeof(imobil)*capacitate);
+    for(int i=0; i<nr_imobile; i++)
+    {
+        nou[i].titlu=(char*)malloc(sizeof(char)*MAX_C);
+        nou[i]=de_copiat[i];
+    }
+    free(de_copiat);
+    return nou;
+}
+
+void realloc_capacity(Lista_imobile* lista)
+{
+    lista->capacitate+=lista->capacitate/2;
+    lista->Imobil=copiere_imobile(lista->Imobil, lista->capacitate,lista->nr_imobile);
+}
+
+void afisare_lista(const Lista_imobile* lista)
+{
+    imobil* nume_imobil;
+    for(int i=0; i<lista->nr_imobile; i++)
+    {
+        nume_imobil=&lista->Imobil[i];
+        system("cls");
+        textcolor(112);
+        printf("%s",nume_imobil->titlu);
+        textcolor(7);
+        printf("\n\n");
+        textcolor(112);
+        printf("Pret:");
+        textcolor(7);
+        printf(" %d$\n",nume_imobil->pret);
+        textcolor(112);
+        printf("Tip:");
+        textcolor(7);
+        printf(" %s\n",nume_imobil->tip==1 ? "apartament":"casa");
+        textcolor(112);
+        printf("Suprafata:");
+        textcolor(7);
+        printf(" %d mp\n",nume_imobil->suprafata);
+        textcolor(112);
+        printf("Confort:");
+        textcolor(7);
+        printf(" %d\n",nume_imobil->confort);
+        textcolor(112);
+        printf("Numar anul constructiei:");
+        textcolor(7);
+        printf(" %d\n",nume_imobil->anul_constructiei);
+        textcolor(112);
+        printf("Numar camere:");
+        textcolor(7);
+        printf(" %d\n",nume_imobil->numar_camere);
+        textcolor(112);
+        printf("Numar bai:");
+        textcolor(7);
+        printf(" %d\n",nume_imobil->numar_bai);
+        textcolor(112);
+        printf("Etaj:");
+        textcolor(7);
+        if(nume_imobil->etaj==0)
+            printf(" parter\n");
+        else
+            printf("%d\n",nume_imobil->etaj);
+        textcolor(112);
+        printf("Numar balcoane:");
+        textcolor(7);
+        printf(" %d\n",nume_imobil->numar_balcoane);
+        textcolor(112);
+        printf("Piscina:");
+        textcolor(7);
+        printf(" %s\n",nume_imobil->piscina==1?"da":"nu");
+        textcolor(112);
+        printf("Terasa:");
+        textcolor(7);
+        printf(" %s\n",nume_imobil->terasa==1?"da":"nu");
+        printf("\n");
+        system("pause");
+    }
+}
+
+void adaugare_imobile(Lista_imobile* lista, imobil* de_adaugat)
+{
+    if(lista->nr_imobile+1>=lista->capacitate)
+    {
+        //afisare_lista(lista);
+        realloc_capacity(lista);
+    }
+    lista->Imobil[lista->nr_imobile]=*de_adaugat;
+    lista->nr_imobile++;
+}
 
 void initializare_imobile()
 {
     FILE* f=fopen("src/input/imobiliare.txt","r");
     char aux;
-    fscanf(f,"%d\n",&nr_imobile);
-    lista_imobile=(imobil*)malloc(sizeof(imobil)*nr_imobile);
-    lista_favorite=(imobil**)malloc(sizeof(imobil*)*nr_imobile);
-    for(int i=0; i<nr_imobile; i++)
+    int n;
+    fscanf(f,"%d\n",&n);
+    lista_imobile=initializare_lista(n);
+    imobil* nou;
+    for(int i=0; i<n; i++)
     {
-        lista_imobile[i].titlu=(char*)malloc(sizeof(char)*30);
-        fgets(lista_imobile[i].titlu,30,f);
-        fscanf(f,"%d",&lista_imobile[i].pret);
-        fscanf(f,"%d",&lista_imobile[i].tip);
-        fscanf(f,"%d",&lista_imobile[i].suprafata);
-        fscanf(f,"%d",&lista_imobile[i].confort);
-        fscanf(f,"%d",&lista_imobile[i].anul_constructiei);
-        fscanf(f,"%d",&lista_imobile[i].numar_camere);
-        fscanf(f,"%d",&lista_imobile[i].numar_bai);
-        fscanf(f,"%d",&lista_imobile[i].etaj);
-        fscanf(f,"%d",&lista_imobile[i].numar_balcoane);
-        fscanf(f,"%d",&lista_imobile[i].piscina);
-        fscanf(f,"%d\n",&lista_imobile[i].terasa);
+        nou=(imobil*)malloc(sizeof(imobil));
+        nou->titlu=(char*)malloc(sizeof(char)*30);
+        fgets(nou->titlu,30,f);
+        fscanf(f,"%d",&nou->pret);
+        fscanf(f,"%d",&nou->tip);
+        fscanf(f,"%d",&nou->suprafata);
+        fscanf(f,"%d",&nou->confort);
+        fscanf(f,"%d",&nou->anul_constructiei);
+        fscanf(f,"%d",&nou->numar_camere);
+        fscanf(f,"%d",&nou->numar_bai);
+        fscanf(f,"%d",&nou->etaj);
+        fscanf(f,"%d",&nou->numar_balcoane);
+        fscanf(f,"%d",&nou->piscina);
+        fscanf(f,"%d\n",&nou->terasa);
+        lista_imobile.Imobil[i]=*nou;
     }
-
 }
-
+/*
 void rescriere_fisier(imobil* nou_imobil)
 {
     FILE* f=fopen("src/input/imobiliare.txt","w");
@@ -111,13 +220,13 @@ void rescriere_fisier1()
     fclose(f);
     initializare_imobile();
 }
-
-int acelasi_titlu(const imobil* imobil1, const imobil* imobil2)
+*/
+int acelasi_titlu(const Lista_imobile* imobil1, const imobil* imobil2)
 {
-    for(int i=0; i<nr_imobile; i++)
+    for(int i=0; i<imobil1->nr_imobile; i++)
     {
         //printf("%s    %s\n",imobil1[i].titlu,imobil2->titlu);
-        if(!strcmp(imobil1[i].titlu,imobil2->titlu))
+        if(!strcmp(imobil1->Imobil[i].titlu,imobil2->titlu))
             return 1;
         //system("pause");
     }
@@ -338,15 +447,15 @@ void copiere_imobil(imobil* imobil1, imobil* imobil2)
         imobil1->terasa=imobil2->terasa;
 }
 
-void cumparare_imobil(imobil* imobil_cumparat, short pozitie)
+void cumparare_imobil(Lista_imobile* lista, short pozitie)
 {
-    if(nr_imobile>0)
+    if(lista->nr_imobile>0)
     {
-        for(int i=pozitie; i<nr_imobile-1; i++)
+        for(int i=pozitie; i<lista->nr_imobile-1; i++)
         {
-            copiere_imobil(&imobil_cumparat[i],&imobil_cumparat[i+1]);
+            lista->Imobil[i]=lista->Imobil[i+1];
         }
-        nr_imobile--;
+        lista->nr_imobile--;
     }
     //rescriere_fisier1();
     //initializare_imobile();
@@ -354,33 +463,34 @@ void cumparare_imobil(imobil* imobil_cumparat, short pozitie)
 
 short meniu_cumparare()
 {
-    char** optiuni=(char**)malloc(sizeof(char*)*(nr_imobile+3));
+    char** optiuni=(char**)malloc(sizeof(char*)*(lista_imobile.nr_imobile+3));
+    int nr_imobile=lista_imobile.nr_imobile;
     short optiune,optiune_imobil;
     back:
-    for(int i=0; i<nr_imobile; i++)
+    for(int i=0; i<lista_imobile.nr_imobile; i++)
     {
-        optiuni[i]=lista_imobile[i].titlu;
+        optiuni[i]=lista_imobile.Imobil[i].titlu;
     }
-    optiuni[nr_imobile+2]="Lista cu imobiliare";
-    optiuni[nr_imobile]="Inapoi\n";
-    optiuni[nr_imobile+1]="Iesire";
-    optiune=meniu(optiuni,0,nr_imobile+2,'\0');
-    while(optiune!=nr_imobile && optiune!=nr_imobile+1)
+    optiuni[lista_imobile.nr_imobile+2]="Lista cu imobiliare";
+    optiuni[lista_imobile.nr_imobile]="Inapoi\n";
+    optiuni[lista_imobile.nr_imobile+1]="Iesire";
+    optiune=meniu(optiuni,0,lista_imobile.nr_imobile+2,'\0');
+    while(optiune!=lista_imobile.nr_imobile && optiune!=lista_imobile.nr_imobile+1)
     {
-        optiune_imobil=afisare_imobil(&lista_imobile[optiune]);
+        optiune_imobil=afisare_imobil(&lista_imobile.Imobil[optiune]);
         if(optiune_imobil==2)
-            optiune=meniu(optiuni,0,nr_imobile+2,'\0');
+            optiune=meniu(optiuni,0,lista_imobile.nr_imobile+2,'\0');
         else if(optiune_imobil==0)
         {
             system("cls");
-            cumparare_imobil(lista_imobile,optiune);
+            cumparare_imobil(&lista_imobile,optiune);
             goto back;
         }
         else if(optiune_imobil==3)
-            optiune=nr_imobile+1;  
+            optiune=lista_imobile.nr_imobile+1;  
     }
     free(optiuni);
-    if(optiune==nr_imobile)
+    if(optiune==lista_imobile.nr_imobile)
         return 1;
     return 0;
 }
@@ -393,7 +503,6 @@ void meniu_vanzare()
         getchar();
     resetBuffer();
     fflush(stdin);
-    nr_imobile++;
     imobil* nou_imobil=(imobil*)malloc(sizeof(imobil));
     nou_imobil->titlu=(char*)malloc(sizeof(char)*30);
     system("cls");
@@ -404,7 +513,7 @@ void meniu_vanzare()
     textcolor(7);
     printf("\n\nTitlu: ");
     fgets(nou_imobil->titlu,30,stdin);
-    if(acelasi_titlu(lista_imobile,nou_imobil))
+    if(acelasi_titlu(&lista_imobile,nou_imobil))
     {
         printf("Titlurile anunturilor trebuie sa fie diferite!\n");
         Sleep(2000);
@@ -435,7 +544,8 @@ void meniu_vanzare()
     printf("Terasa(1:da,0:nu): ");
     scanf("%d",&nou_imobil->terasa);
     system("cls");
-    rescriere_fisier(nou_imobil);
+    adaugare_imobile(&lista_imobile,nou_imobil);
+    //rescriere_fisier(nou_imobil);
     i++;
 }
 

@@ -2,12 +2,13 @@
 
 int main()
 {
+    
     char* optiuni[]={"Cumparare","Vanzare","Exit","Imobiliare!"};
     short optiune;
     initializare_imobile();
+    printf("da");
     //afisare_imobile();
     label_meniu_principal:
-
     optiune=meniu(optiuni,0,3,'\n');
     switch(optiune)
     {
@@ -56,6 +57,7 @@ int main()
     while(GetAsyncKeyState(VK_RETURN)) {}
     Sleep(100);
     system("cls");
+    
     return 0;
 }
 
