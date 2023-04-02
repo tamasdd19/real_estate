@@ -220,67 +220,30 @@ void initializare_imobile()
     }
     lista_favorite=initializare_lista_favorite(&lista_imobile);
 }
-/*
-void rescriere_fisier(imobil* nou_imobil)
+
+void rescriere_fisier(const Lista_imobile* lista)
 {
     FILE* f=fopen("src/input/imobiliare.txt","w");
-    fprintf(f,"%d\n",nr_imobile);
-    for(int i=0; i<nr_imobile-1; i++)
+    fprintf(f,"%d\n",lista->nr_imobile);
+    for(int i=0; i<lista->nr_imobile; i++)
     {
-        fprintf(f,"%s",lista_imobile[i].titlu);
-        free(lista_imobile[i].titlu);
-        fprintf(f,"%d ",lista_imobile[i].pret);
-        fprintf(f,"%d ",lista_imobile[i].tip);
-        fprintf(f,"%d ",lista_imobile[i].suprafata);
-        fprintf(f,"%d ",lista_imobile[i].confort);
-        fprintf(f,"%d ",lista_imobile[i].anul_constructiei);
-        fprintf(f,"%d ",lista_imobile[i].numar_camere);
-        fprintf(f,"%d ",lista_imobile[i].numar_bai);
-        fprintf(f,"%d ",lista_imobile[i].etaj);
-        fprintf(f,"%d ",lista_imobile[i].numar_balcoane);
-        fprintf(f,"%d ",lista_imobile[i].piscina);
-        fprintf(f,"%d\n",lista_imobile[i].terasa);
+        fprintf(f,"%s",lista->Imobil[i].titlu);
+        fprintf(f,"%d ",lista->Imobil[i].pret);
+        fprintf(f,"%d ",lista->Imobil[i].tip);
+        fprintf(f,"%d ",lista->Imobil[i].suprafata);
+        fprintf(f,"%d ",lista->Imobil[i].confort);
+        fprintf(f,"%d ",lista->Imobil[i].anul_constructiei);
+        fprintf(f,"%d ",lista->Imobil[i].numar_camere);
+        fprintf(f,"%d ",lista->Imobil[i].numar_bai);
+        fprintf(f,"%d ",lista->Imobil[i].etaj);
+        fprintf(f,"%d ",lista->Imobil[i].numar_balcoane);
+        fprintf(f,"%d ",lista->Imobil[i].piscina);
+        fprintf(f,"%d\n",lista->Imobil[i].terasa);
     }
-        fprintf(f,"%s",nou_imobil->titlu);
-        fprintf(f,"%d ",nou_imobil->pret);
-        fprintf(f,"%d ",nou_imobil->tip);
-        fprintf(f,"%d ",nou_imobil->suprafata);
-        fprintf(f,"%d ",nou_imobil->confort);
-        fprintf(f,"%d ",nou_imobil->anul_constructiei);
-        fprintf(f,"%d ",nou_imobil->numar_camere);
-        fprintf(f,"%d ",nou_imobil->numar_bai);
-        fprintf(f,"%d ",nou_imobil->etaj);
-        fprintf(f,"%d ",nou_imobil->numar_balcoane);
-        fprintf(f,"%d ",nou_imobil->piscina);
-        fprintf(f,"%d",nou_imobil->terasa);
     fclose(f);
-    free(lista_imobile);
     initializare_imobile();
 }
 
-void rescriere_fisier1()
-{
-    FILE* f=fopen("src/input/imobiliare.txt","w");
-    fprintf(f,"%d\n",nr_imobile);
-    for(int i=0; i<nr_imobile; i++)
-    {
-        fprintf(f,"%s",lista_imobile[i].titlu);
-        fprintf(f,"%d ",lista_imobile[i].pret);
-        fprintf(f,"%d ",lista_imobile[i].tip);
-        fprintf(f,"%d ",lista_imobile[i].suprafata);
-        fprintf(f,"%d ",lista_imobile[i].confort);
-        fprintf(f,"%d ",lista_imobile[i].anul_constructiei);
-        fprintf(f,"%d ",lista_imobile[i].numar_camere);
-        fprintf(f,"%d ",lista_imobile[i].numar_bai);
-        fprintf(f,"%d ",lista_imobile[i].etaj);
-        fprintf(f,"%d ",lista_imobile[i].numar_balcoane);
-        fprintf(f,"%d ",lista_imobile[i].piscina);
-        fprintf(f,"%d\n",lista_imobile[i].terasa);
-    }
-    fclose(f);
-    initializare_imobile();
-}
-*/
 int acelasi_titlu(const Lista_imobile* imobil1, const imobil* imobil2)
 {
     for(int i=0; i<imobil1->nr_imobile; i++)

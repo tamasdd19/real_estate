@@ -47,11 +47,11 @@ int main()
     case 2:
         break;
     }
+    rescriere_fisier(&lista_imobile);
     resetBuffer();
     while(GetAsyncKeyState(VK_RETURN)) {}
     Sleep(100);
     system("cls");
-    
     return 0;
 }
 
