@@ -2,7 +2,6 @@
 
 int main()
 {
-    
     char* optiuni[]={"Cumparare","Vanzare","Exit","Imobiliare!"};
     short optiune;
     initializare_imobile();
@@ -23,16 +22,11 @@ int main()
         switch(optiune)
         {
         case 0:
-            if(meniu_cumparare())
+            if(meniu_cumparare(&lista_imobile,&lista_favorite))
                 goto label_meniu_cumparare;
             break;
         case 1:
-            optiuni[0]="Nu ai favorite";
-            optiuni[1]="Inapoi";
-            optiuni[2]="Iesire";
-            optiuni[3]="Meniu favorite";
-            optiune = meniu(optiuni,0,3,'\n');
-            if(optiune!=2)
+            if(meniu_favorite(&lista_imobile,&lista_favorite))
                 goto label_meniu_cumparare;
             break;
         case 2:
