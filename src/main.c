@@ -2,11 +2,11 @@
 
 int main()
 {
+    Lista_imobile lista_imobile;
+    Lista_imobile_favorite lista_favorite;
     char* optiuni[]={"Cumparare","Vanzare","Exit","Imobiliare!"};
     short optiune;
-    initializare_imobile();
-    printf("da");
-    //afisare_imobile();
+    initializare_imobile(&lista_imobile,&lista_favorite);
     label_meniu_principal:
     optiune=meniu(optiuni,0,3,'\n');
     switch(optiune)
@@ -41,13 +41,13 @@ int main()
         }
         break;
     case 1: //meniu_vanzare
-        meniu_vanzare();
+        meniu_vanzare(&lista_imobile,&lista_favorite);
         goto label_meniu_principal;
         break;
     case 2:
         break;
     }
-    rescriere_fisier(&lista_imobile);
+    //rescriere_fisier(&lista_imobile);
     resetBuffer();
     while(GetAsyncKeyState(VK_RETURN)) {}
     Sleep(100);
