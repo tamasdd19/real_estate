@@ -32,8 +32,8 @@ typedef struct Lista_imobile
 
 typedef struct Lista_imobile_favorite
 {
-    imobil* lista;
-    int* pozitii;
+    imobil* lista; // o sa vad cum sa il sterg si sa mearga la fel, momentan daca il sterg imi da eroare
+    int* pozitii;   // mai mult ca sigur e ceva legat de cum se stocheaza memoria, caci nu-l folosesc, las asta pe putin mai incolo
     int nr_favorite;
 }Lista_imobile_favorite;
 

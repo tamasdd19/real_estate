@@ -47,7 +47,7 @@ int main()
     case 2:
         break;
     }
-    //rescriere_fisier(&lista_imobile);
+    rescriere_fisier(&lista_imobile);
     resetBuffer();
     while(GetAsyncKeyState(VK_RETURN)) {}
     Sleep(100);
