@@ -5,7 +5,7 @@
 #include <windows.h>
 #include <stdlib.h>
 #include <string.h>
-#define MAX_C 30
+#define MAX_C 50
 
 typedef struct imobil
 {
