@@ -1,1 +1,5 @@
-0
+2
+Apartament 3 camere zona buna
+100000 1 100 1 2010 3 2 1 2 0 0
+Casa, zona centrala!
+200000 0 200 1 1980 5 3 1 2 1 1
