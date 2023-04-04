@@ -3,8 +3,7 @@ A university project to buy/sell real estate implemented with C.<br>
 ---
 ## Setup
 Clone the repository, and just run the main.exe file to start the project.<br>
-If you want to make changes to the project, you can modify the main.cpp file located in src/ an the imobiliare.h file locate in include/<br>
-In order to compile you have to use **make run** in a terminal and everything will compile and run.
+If you want to make changes to the project, be sure that after you've made the changes you use **make run** in a terminal in order to compile and run<br>
 
 ---
 ##  Features
