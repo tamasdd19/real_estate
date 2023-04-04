@@ -3,7 +3,7 @@ A university project to buy/sell real estate implemented with C.<br>
 ---
 ## Setup
 Clone the repository, and just run the main.exe file to start the project.<br>
-If you want to make changes to the project, be sure that after you've made the changes you use **make run** in a terminal in order to compile and run<br>
+If you want to make changes to the project, be sure to you use **make run** afterwards in a terminal in order to compile and run the program.<br>
 
 ---
 ##  Features
